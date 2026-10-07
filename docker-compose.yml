@@ -1,0 +1,46 @@
+version: '3'
+services:
+  todo-postgres:
+    build: ./todo-postgresql
+    image: todo-postgres:5.0.0-compose
+    volumes:
+      - mydata:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+    restart: always
+
+  todo-backend:
+    build: ./todo-backend
+    image: todo-backend:5.0.0-compose
+    environment:
+      - DB_URL=todo-postgres
+    depends_on:
+      - todo-postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 512M
+    restart: on-failure
+      
+  todo-front:
+    build: ./todo-frontend
+    image: todo-front:5.0.0-compose
+    environment:
+      - BACKEND_HOST=todo-backend
+    ports:
+      - 80:80
+    depends_on:
+      - todo-backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 64M
+    restart: on-failure
+
+volumes:
+  mydata:
