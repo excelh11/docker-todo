@@ -2,7 +2,7 @@
   <div id="app">
     <div class="welcome-message" v-if="isLoggedIn">
       <p class="welcome-text">안녕하세요, <span class="user-name">{{ user.name }}</span>님!</p>
-      <p class="description">오늘 할 일, 하나씩 해내 볼까요?</p>
+      <p class="description">오늘의 할일 ?????</p>
     </div>
     <div class="brand" v-if="isLoggedIn">
       <v-icon class="brand-icon">mdi-checkbox-marked-circle-outline</v-icon> TODO
